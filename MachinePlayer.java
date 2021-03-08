@@ -1,20 +1,21 @@
 
 
-public class MachinePlayer implements Move{
+public class MachinePlayer implements Moveable{
 
 	String name;
 	int score;
 
-	private void setName(String _name){
+	private void setName(String name){
 
-		this.name = _name;
+		this.name = name;
 	}
 
 	public String getName(){
 		return name;
 	}
 
-	public void move(int a, int b, char c){
-		
+	public void move(int a, int b, int x, int y){
+
+
 	}
 }

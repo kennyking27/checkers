@@ -1,6 +1,6 @@
 
 
-public class Player implements Move {
+public class Player implements Moveable {
 
 	Game g;
 	String name;
@@ -30,12 +30,8 @@ public class Player implements Move {
 		return color;
 	}
 	
-	public void move(int a, int b, int x, int y, char c){
-/*
-		if(g.isMoveValid(a,b,x,y,c)){
-			
-		}
-*/
+	public void move(int a, int b, int x, int y){
+
 	}
 	
 }
