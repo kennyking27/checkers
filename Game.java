@@ -1,12 +1,13 @@
-
+import java.util.ArrayList;
 
 public class Game {
-
+	Board board = new Board();
 	int turnCounter;
 	final String p1PieceColor = "black";
 	final String p2PieceColor = "red";
 	int p1Score = 0;
 	int p2Score = 0;
+	ArrayList<String> movesForPiece = new ArrayList<String>();
 
 	//buffered reader input stream 
 	//take in names of players
@@ -15,12 +16,12 @@ public class Game {
 	{
 		
 	}
-	
+
 	public int getTurnCounter(){
 		return turnCounter;
-	}	
+	}
 
-	private boolean is_inbounds(int a, int b, int x, int y) {
+	protected boolean is_inbounds(int a, int b, int x, int y) {
 
 		return ((a >= 0 && a <= 9) && 
 				(b >= 0 && b <= 9) && 
@@ -28,15 +29,48 @@ public class Game {
 				(y >= 0 && y <= 9));	
 	}
 
-	private boolean dark_square(int a, int b, int x, int y) {
+	 protected boolean is_dark_square(int a, int b, int x, int y) {
 		//Checking for dark square ONLY.
 		//Dark squares have an even/odd OR odd/even combination
 		return ( ((a % 2 == 0 && b % 2 == 1) || (a % 2 == 1 && b % 2 == 0)) && 
 				 ((x % 2 == 0 && y % 2 == 1) || (x % 2 == 1 && y % 2 == 0)) );	
 	}
 
-	private boolean singleJump(Piece p, int a, int b, int x, int y) {
-		//need orientation based on color
+	/*
+		insert all possible moves for a given piece into the arrayList
+	*/
+	protected boolean checkMove(Piece p, int a, int b, int x, int y) {
+
+		String color = p.getColor();
+		
+			switch( color ) {
+				case "BLK":
+				System.out.println("SOUTHBOUND");
+				//single move
+				 if( ((a + 1 == x && b - 1 == y) || (a + 1 == x && b + 1 == y)) // left or right
+				 	&& board.getPiece(x, y) == '-' // vacant square
+				 	&& is_dark_square(a, b, x, y)
+					&& is_inbounds(a, b, x, y) ) 
+				{
+					return true;
+				}
+				
+				break;
+				
+				case "RED":
+				System.out.println("NORTHBOUND");
+				
+				//single move
+				if( ((a - 1 == x && b - 1 == y) || (a - 1 == x && b + 1 == y)) // left or right
+					&& board.getPiece(x, y) == '-' // vacant square
+					&& is_dark_square(a, b, x, y)
+			   		&& is_inbounds(a, b, x, y) )
+				{
+					return true;   
+				}
+
+				break;
+			}
 		return false;
 	}
 
@@ -49,17 +83,18 @@ public class Game {
 		//check source square and destination sq
 
 		String color = p.getColor();
-		
+		char [][] tempBoard = board.GameBoard;
+
 		switch ( color ) {
 
 			case "BLK": // SOUTHBOUND
-
 				System.out.println("SOUTHBOUND");
 
+
+				
 				break;
 
 			case "RED": // NORTHBOUND
-
 				System.out.println("NORTHBOUND");
 
 				break;	
@@ -80,13 +115,13 @@ public class Game {
 	}	
 	
 	public static void main(String [] args){
-		Piece p1 = new Piece("BLK",false,'-');
+		Piece p1 = new Piece("BLK",false,'B');
 		Piece p2 = new Piece("RED",false,'-');
 		Piece p3 = new Piece("BLK",false,'-');
 		Piece p4 = new Piece("BLK",false,'-');
 		Piece p5 = new Piece("RED",false,'-');
 
-
+		Board board = new Board();
 		Game g = new Game();
 		g.isMoveValid(p1,0,0,1,1);
 		g.isMoveValid(p2,0,0,1,1);
@@ -102,10 +137,29 @@ public class Game {
 		System.out.println(g.is_inbounds(0,0,1,11));
 
 		
-		System.out.println("dark: " + g.dark_square(0,1,0,1));
-		System.out.println("dark: " + g.dark_square(1,0,1,0));
-		System.out.println("dark: " + g.dark_square(0,1,1,0));
-		System.out.println("dark: " + g.dark_square(1,0,0,1));
+		System.out.println("dark: " + g.is_dark_square(0,1,0,1));
+		System.out.println("dark: " + g.is_dark_square(1,0,1,0));
+		System.out.println("dark: " + g.is_dark_square(0,1,1,0));
+		System.out.println("dark: " + g.is_dark_square(1,0,0,1));
+
+/*
+ a a a a a
+a a a a a
+ a a a a a
+a a a a a
+ - - - - -
+- - - - -
+ b b b b b
+b b b b b
+ b b b b b
+b b b b b
+
+*/
+
+		System.out.println(g.checkMove(p1, 3, 0, 4, 1));
+		System.out.println(g.checkMove(p1, 2, 1, -4, -1));
+		System.out.println(g.checkMove(p1, 2, 1, 3, 2));
+		System.out.println(g.checkMove(p1, 3, 2, 4, 3));
 
 	}
 }

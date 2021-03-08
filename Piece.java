@@ -1,11 +1,11 @@
 
 
-public class Piece {
+public class Piece implements Moveable{
 
 	private String color;	
 	private boolean isKing;
 	private char c;
-
+	Board b;
 	
 	public Piece(String color, boolean isKing, char c)
 	{
@@ -25,4 +25,9 @@ public class Piece {
 	public boolean getKingStatus(){
 		return isKing;
 	}
+
+	public void move(int a, int b, int x, int y){
+		//nothing complicated.  just move the piece
+	}
+
 }

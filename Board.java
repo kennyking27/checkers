@@ -5,28 +5,27 @@
 
 public class Board {
 
-final int HEIGHT = 10;
-final int WIDTH  = 10;
-final char P1 = 'a'; 
-final char P2 = 'b'; 
+private	final int HEIGHT = 10;
+private final int WIDTH = 10;
+private final char P1 = 'a'; 
+private final char P2 = 'b'; 
 
-
-char [][] GameBoard = new char[HEIGHT][WIDTH];
+protected char [][] GameBoard = new char[HEIGHT][WIDTH];
 
 	public Board()
 	{
-		this.createGameBoard();
+		this.createGameBoard();		
 	}
+	
+	public int HEIGHT(){ return HEIGHT; }
+	
+	public int WIDTH(){ return WIDTH; }
 
-	private void setPiece(int x, int y, char c){
-		this.GameBoard[x][y] = c;
-	}
+	private void setPiece(int x, int y, char c){ this.GameBoard[x][y] = c; }
 
-	public char getPiece(int x, int y){
-		return this.GameBoard[x][y];
-	}
+	public char getPiece(int x, int y){ return this.GameBoard[x][y]; }
 
-	private void createGameBoard(){
+	protected void createGameBoard(){
 		
 		for(int i = 0; i < HEIGHT; i++){
 			for(int j = 0; j < WIDTH; j++){
@@ -65,7 +64,7 @@ char [][] GameBoard = new char[HEIGHT][WIDTH];
 				}
 			}
 		}
-	}	
+	}
 
 	public void printGameBoard(){
 
@@ -74,12 +73,16 @@ char [][] GameBoard = new char[HEIGHT][WIDTH];
 				System.out.print(this.getPiece(i,j));
 			}
 			System.out.println();
-		}			
+		}		
 	}
 
 	
 	public static void main(String [] args){
 		Board b = new Board();
+		Game g = new Game();
+		Piece p = new Piece("RED", false, '=');
+		
 		b.printGameBoard();
+		
 	}
 }
